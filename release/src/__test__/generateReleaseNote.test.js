@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require("assert");
 const generateReleaseNote = require("../generateReleaseNote");
 
 try {

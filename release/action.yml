@@ -1,20 +1,6 @@
 name: release @akashic package
 description: publish and create release note
 inputs:
-  target_repository:
-    description: Target Git repository
-    required: true
-  target_branch:
-    description: Target branch
-    required: true
-    default: master
-  target_npm_tag:
-    description: Npm tag name when publish
-    required: true
-    default: latest
-  target_dir_path:
-    description: Root directory of target repository
-    required: true
   github_token:
     description: Github token for target repository
     required: true

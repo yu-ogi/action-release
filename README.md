@@ -9,12 +9,22 @@ akashic-games organization のリポジトリで共通で利用する Github Act
 * publish 時の バージョンで Github Release Note を作成
 
 #### 入力パラメータ
-* `target_repository`: このアクションの対象リポジトリ。ただし、akashic-games organization に属するリポジトリ名を入力する必要がある。
-* `target_branch`: このアクションの対象ブランチ。ここで入力したブランチの内容で Publish と GitHub での Tag 打ちが行われる。デフォルト値は master。
-* `target_npm_tag`: publish したバージョンにここで入力した名前のタグが付けられる。デフォルト値はlatest。
-* `target_dir_path`: 対象リポジトリのルートパス。具体的には、package.json や CHANGELOG.md が配置されているパス。
-* `github_token`: 対象リポジトリの Github トークン
-* `npm_token`: 対象リポジトリの Npm パッケージの Npm トークン
+* `github_token`: 対象リポジトリの Github トークン。必須パラメータ
+* `npm_token`: 対象リポジトリの Npm パッケージの Npm トークン。必須パラメータ
+
+### Usage (利用例)
+```
+# relaseアクション利用前にactions/checkout等で対象のgithubリポジトリをcheckoutしておく必要があります
+- name: Checkout repository
+  uses: actions/checkout@v2
+- name: Publish and Release
+  uses: akashic-games/actions/release@master
+  with:
+    # 基本的にはデフォルトで設定されている秘匿変数GITHUB_TOKENを使用します
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    # npmトークンは予め対象のgithubリポジトリに秘匿変数として登録しておくことを推奨します
+    npm_token: ${{ secrets.NPM_TOKEN }}
+```
 
 ## ビルド方法
 以下のコマンドを実行 

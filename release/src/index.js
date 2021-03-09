@@ -4,31 +4,40 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const npmPublish = require("@jsdevtools/npm-publish");
 const generateReleaseNote = require("./generateReleaseNote");
+const inputs = {
+	githubToken: core.getInput("github_token"),
+	npmToken: core.getInput("npm_token"),
+};
+const targetDirPath = process.env.GITHUB_WORKSPACE;
+const packageJsonPath = path.join(targetDirPath, "package.json");
+const changelogPath = path.join(targetDirPath, "CHANGELOG.md");
 
-const targetDirPath = core.getInput("target_dir_path");
-npmPublish({
-	package: path.join(targetDirPath, "package.json"),
-	token: core.getInput("npm_token"),
-	tag: core.getInput("target_npm_tag"),
-	access: "public"
-}).then(() => {
-	const packageJson = require(path.join(targetDirPath, "package.json"));
-	const version = packageJson["version"];
-	let body = "";
-	const changelogPath = path.join(targetDirPath, "CHANGELOG.md");
-	if (fs.existsSync(changelogPath)) {
-		const changelog = fs.readFileSync(changelogPath).toString();
-		body = generateReleaseNote(changelog, version);
+(async () => {
+	try {
+		await npmPublish({
+			package: packageJsonPath,
+			token: inputs.npmToken,
+			access: "public"
+		});
+		const packageJson = require(packageJsonPath);
+		const version = packageJson["version"];
+		let body = "";
+		if (fs.existsSync(changelogPath)) {
+			const changelog = fs.readFileSync(changelogPath).toString();
+			body = generateReleaseNote(changelog, version);
+		}
+		const octokit = github.getOctokit(inputs.githubToken);
+		// GITHUB_REPOSITORYのフォーマットは オーナー名/リポジトリ名 となっているのでそれぞれ抽出する
+		const repositoryInfo = process.env.GITHUB_REPOSITORY.split("/");
+		await octokit.repos.createRelease({
+			owner: repositoryInfo[0],
+			repo: repositoryInfo[1],
+			tag_name: "v" + version,
+			name: "Release " + version,
+			body: body,
+			target_commitish: process.env.GITHUB_SHA
+		});
+	} catch(error) {
+		core.setFailed(error.message);
 	}
-	const octokit = github.getOctokit(core.getInput("github_token"));
-	return octokit.repos.createRelease({
-		owner: "akashic-games",
-		repo: core.getInput("target_repository"),
-		tag_name: "v" + version,
-		name: "Release " + version,
-		body: body,
-		target_commitish: core.getInput("target_branch")
-	});
-}).catch(error => {
-	core.setFailed(error.message);
-});
+})();

@@ -1,5 +1,5 @@
 {
-  "name": "actions",
+  "name": "@akashic/actions",
   "version": "1.0.0",
   "description": "Common actions for repositories of akashic-games organization",
   "private": true,
@@ -26,7 +26,7 @@
     "@jsdevtools/npm-publish": "^1.4.3"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.22.3",
+    "@vercel/ncc": "^0.27.0",
     "npm-run-all": "^4.1.5"
   }
 }
