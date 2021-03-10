@@ -29,7 +29,7 @@ akashic-games organization のリポジトリで共通で利用する Github Act
 
 ### 注意点
 このアクションを使用する場合、対象のパッケージでは以下の対応が必要になります。
-* スコープ化された公開パッケージの場合、package.jsonの`publishConfig.access`にtrueを指定する必要があります。
+* スコープ化された公開パッケージの場合、package.jsonの`publishConfig.access`に`"public"`を指定する必要があります。
 
 ## ビルド方法
 以下のコマンドを実行

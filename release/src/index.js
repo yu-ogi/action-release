@@ -35,7 +35,7 @@ const gitCommitHash = process.env.GITHUB_SHA;
 			owner: ownerName,
 			repo: repositoryName,
 			tag_name: "v" + version,
-			name: "Release " + version,
+			name: "Release v" + version,
 			body: body,
 			target_commitish: gitCommitHash
 		});
