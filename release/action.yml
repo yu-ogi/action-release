@@ -1,4 +1,4 @@
-name: release @akashic package
+name: release package
 description: publish and create release note
 inputs:
   github_token:
