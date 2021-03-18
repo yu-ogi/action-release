@@ -19,7 +19,7 @@ akashic-games organization のリポジトリで共通で利用する Github Act
 - name: Checkout repository
   uses: actions/checkout@v2
 - name: Publish and Release
-  uses: akashic-games/actions/release@master
+  uses: akashic-games/actions/release@v1
   with:
     # 基本的にはデフォルトで設定されている秘匿変数GITHUB_TOKENを使用します
     github_token: ${{ secrets.GITHUB_TOKEN }}
