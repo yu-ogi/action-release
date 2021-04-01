@@ -1,0 +1,12 @@
+name: release package
+description: publish and create release note
+inputs:
+  github_token:
+    description: Github token for target repository
+    required: true
+  npm_token:
+    description: Npm token for target package
+    required: true
+runs:
+  using: node12
+  main: dist/index.js
