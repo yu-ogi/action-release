@@ -14,7 +14,7 @@
 - name: Checkout repository
   uses: actions/checkout@v2
 - name: Publish and Release
-  uses: akashic-games/actions/release@v1
+  uses: akashic-games/action-release@v1
   with:
     # 基本的にはデフォルトで設定されている秘匿変数GITHUB_TOKENを使用します
     github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -46,7 +46,7 @@ npm test
 ## ライセンス
 
 本リポジトリは MIT License の元で公開されています。
-詳しくは [LICENSE](https://github.com/akashic-games/actions/blob/master/LICENSE) をご覧ください。
+詳しくは [LICENSE](https://github.com/akashic-games/action-release/blob/master/LICENSE) をご覧ください。
 
 ただし、画像ファイルおよび音声ファイルは
 [CC BY 2.1 JP](https://creativecommons.org/licenses/by/2.1/jp/) の元で公開されています。
