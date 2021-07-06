@@ -1,25 +1,25 @@
 {
-  "name": "@akashic/actions",
+  "name": "@akashic/actions-release",
   "version": "1.0.0",
-  "description": "Common actions for repositories of akashic-games organization",
+  "description": "Common release action",
   "private": true,
   "scripts": {
     "build": "run-s build:*",
-    "build:release": "ncc build release/src/index.js -o release/dist",
+    "build:release": "ncc build ./src/index.js -o ./dist",
     "test": "run-s test:*",
-    "test:generate-release-note": "node ./release/src/__test__/generateReleaseNote.test.js"
+    "test:generate-release-note": "node ./src/__test__/generateReleaseNote.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akashic-games/actions.git"
+    "url": "git+https://github.com/akashic-games/actions-release.git"
   },
   "keywords": [],
   "author": "DWANGO Co., Ltd.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/akashic-games/actions/issues"
+    "url": "https://github.com/akashic-games/actions-release/issues"
   },
-  "homepage": "https://github.com/akashic-games/actions#readme",
+  "homepage": "https://github.com/akashic-games/actions-release#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
