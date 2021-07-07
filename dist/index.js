@@ -11451,7 +11451,7 @@ try {
 
 /***/ }),
 
-/***/ 4472:
+/***/ 2924:
 /***/ ((module) => {
 
 module.exports = (changelog, version) => {
@@ -11477,7 +11477,7 @@ module.exports = (changelog, version) => {
 
 /***/ }),
 
-/***/ 8581:
+/***/ 4351:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const fs = __nccwpck_require__(5747);
@@ -11485,7 +11485,7 @@ const path = __nccwpck_require__(5622);
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const npmPublish = __nccwpck_require__(209);
-const generateReleaseNote = __nccwpck_require__(4472);
+const generateReleaseNote = __nccwpck_require__(2924);
 const inputs = {
 	githubToken: core.getInput("github_token"),
 	npmToken: core.getInput("npm_token"),
@@ -11687,6 +11687,6 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(8581);
+/******/ 	return __nccwpck_require__(4351);
 /******/ })()
 ;
