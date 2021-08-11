@@ -3,6 +3,7 @@ const path = require("path");
 const core = require("@actions/core");
 const github = require("@actions/github");
 const npmPublish = require("@jsdevtools/npm-publish");
+const canNpmPublish = require("can-npm-publish").canNpmPublish;
 const generateReleaseNote = require("./generateReleaseNote");
 const inputs = {
 	githubToken: core.getInput("github_token"),
@@ -18,6 +19,13 @@ const repositoryName = repositoryInfo[1];
 const gitCommitHash = process.env.GITHUB_SHA;
 
 (async () => {
+	try {
+		await canNpmPublish(packageJsonPath);
+	} catch (error) {
+		// すでに publish 済みの場合は正常終了とする
+		console.log(error.message);
+		return;
+	}
 	try {
 		await npmPublish({
 			package: packageJsonPath,
