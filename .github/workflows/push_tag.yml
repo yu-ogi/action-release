@@ -1,0 +1,27 @@
+name: push tag
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Push tag
+        run: |
+          git config user.name 'github-actions'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          PACKAGE_VERSION=$(cat package.json | jq -r '.version')
+          GIT_TAG="v${PACKAGE_VERSION}"
+
+          if ! git show-ref --quiet refs/tags/${GIT_TAG}; then
+            git tag -a ${GIT_TAG} -m "${GIT_TAG}"
+            git push origin ${GIT_TAG}
+          fi
