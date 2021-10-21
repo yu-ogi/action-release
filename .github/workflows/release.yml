@@ -1,4 +1,4 @@
-name: push tag
+name: release
 
 on:
   push:
@@ -6,14 +6,12 @@ on:
       - main
 
 jobs:
-  push_tag:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Push tag
+      - name: Release
         run: |
           git config user.name 'github-actions'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -25,3 +23,14 @@ jobs:
             git tag -a ${GIT_TAG} -m "${GIT_TAG}"
             git push origin ${GIT_TAG}
           fi
+
+          PACKAGE_VERSION_MAJOR=$(echo ${PACKAGE_VERSION} | cut -d. -f1)
+          GIT_HEAD_TAG="v${PACKAGE_VERSION_MAJOR}"
+
+          if git show-ref --quiet refs/tags/${GIT_HEAD_TAG}; then
+            git tag -d ${GIT_HEAD_TAG}
+            git push --delete origin ${GIT_HEAD_TAG}
+          fi
+
+          git tag -a ${GIT_HEAD_TAG} -m "${GIT_HEAD_TAG}"
+          git push origin ${GIT_HEAD_TAG}
