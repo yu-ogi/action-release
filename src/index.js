@@ -42,8 +42,8 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 		console.log(inputs);
 
 		git
-			.addConfig("user.email", inputs.gitName)
-			.addConfig("user.name", inputs.gitEmail);
+			.addConfig("user.name", inputs.gitName, undefined, "global")
+			.addConfig("user.email", inputs.gitEmail, undefined, "global");
 
 		let body = "";
 		if (fs.existsSync(changelogPath)) {
@@ -78,7 +78,7 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 		// });
 
 		const octokit = github.getOctokit(inputs.githubToken);
-		if (!inputs.suppressReleaseCreation) {
+		if (inputs.suppressReleaseCreation !== "true") {
 			await octokit.repos.createRelease({
 				owner: ownerName,
 				repo: repositoryName,
