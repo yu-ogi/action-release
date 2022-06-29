@@ -53,19 +53,18 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 				// UNRELEASED_CHANGES.md が存在したらそれを読み込む
 				if (fs.existsSync(unreleasedChangesPath)) {
 					body = fs.readFileSync(unreleasedChangesPath).toString().trim();
-					const newChangelog = injectChangelog(changelog, version, body);
+				}
+				if (body !== "") {
 					fs.writeFileSync(unreleasedChangesPath, "");
-					fs.writeFileSync(changelogPath, newChangelog);
 					await git.add(unreleasedChangesPath);
 				} else {
 					// TODO: 変更内容の修正
 					body = "* 内部モジュールの更新";
-					const newChangelog = injectChangelog(changelog, version, content);
-					fs.writeFileSync(changelogPath, newChangelog);
 				}
+				const newChangelog = injectChangelog(changelog, version, body);
+				fs.writeFileSync(changelogPath, newChangelog);
+				await git.add(changelogPath);
 			}
-
-			await git.add(changelogPath);
 		}
 
 		await git.commit("Update CHANGELOG.md");
