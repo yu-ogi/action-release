@@ -26,13 +26,13 @@ const gitCommitHash = process.env.GITHUB_SHA;
 const currentBranch = process.env.GITHUB_REF_NAME;
 
 (async () => {
-	try {
-		await canNpmPublish(packageJsonPath);
-	} catch (error) {
-		// すでに publish 済みの場合は正常終了とする
-		console.log(error.message);
-		return;
-	}
+	// try {
+	// 	await canNpmPublish(packageJsonPath);
+	// } catch (error) {
+	// 	// すでに publish 済みの場合は正常終了とする
+	// 	console.log(error.message);
+	// 	return;
+	// }
 	try {
 		const packageJson = require(packageJsonPath);
 		const version = packageJson["version"];
@@ -69,10 +69,10 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 		await git.commit("Update CHANGELOG.md");
 		await git.push("origin", currentBranch);
 
-		await npmPublish({
-			package: packageJsonPath,
-			token: inputs.npmToken
-		});
+		// await npmPublish({
+		// 	package: packageJsonPath,
+		// 	token: inputs.npmToken
+		// });
 
 		const octokit = github.getOctokit(inputs.githubToken);
 		if (!inputs.suppressReleaseCreation) {
