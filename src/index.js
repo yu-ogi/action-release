@@ -39,9 +39,6 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 		const version = packageJson["version"];
 		const git = simpleGit();
 
-		console.log("=== inputs ===");
-		console.log(inputs);
-
 		git
 			.addConfig("user.name", inputs.gitName, undefined, "global")
 			.addConfig("user.email", inputs.gitEmail, undefined, "global");
@@ -53,17 +50,18 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 
 			// CHANGELOG に差分が存在しない場合は独自に書き込む
 			if (body === "") {
-
 				// UNRELEASED_CHANGES.md が存在したらそれを読み込む
 				if (fs.existsSync(unreleasedChangesPath)) {
-					const unreleasedChanges = fs.readFileSync(unreleasedChangesPath).toString().trim();
-					body = injectChangelog(body, version, unreleasedChanges);
+					body = fs.readFileSync(unreleasedChangesPath).toString().trim();
+					const newChangelog = injectChangelog(changelog, version, body);
 					fs.writeFileSync(unreleasedChangesPath, "");
+					fs.writeFileSync(changelogPath, newChangelog);
 					await git.add(unreleasedChangesPath);
 				} else {
 					// TODO: 変更内容の修正
-					const content = "* 内部モジュールの更新";
-					body = injectChangelog(body, version, content);
+					body = "* 内部モジュールの更新";
+					const newChangelog = injectChangelog(changelog, version, content);
+					fs.writeFileSync(changelogPath, newChangelog);
 				}
 			}
 
