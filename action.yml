@@ -10,11 +10,11 @@ inputs:
   git_name:
     description: The name of the git
     required: false
-    default: github-actions
+    default: 'github-actions'
   git_email:
     description: The email of the git
     required: false
-    default: 41898282+github-actions[bot]@users.noreply.github.com
+    default: '41898282+github-actions[bot]@users.noreply.github.com'
   suppress_release_creation:
     description: Suppress a release creation
     required: false
