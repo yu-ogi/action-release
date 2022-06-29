@@ -28187,6 +28187,7 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 				if (body !== "") {
 					fs.writeFileSync(unreleasedChangesPath, "");
 					await git.add(unreleasedChangesPath);
+					await git.commit("Update UNRELEASED_CHANGES.md");
 				} else {
 					// TODO: 変更内容の修正
 					body = "* 内部モジュールの更新";
@@ -28194,10 +28195,12 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 				const newChangelog = injectChangelog(changelog, version, body);
 				fs.writeFileSync(changelogPath, newChangelog);
 				await git.add(changelogPath);
+				await git.commit("Update CHANGELOG.md");
 			}
+		} else {
+			body = "* その他の更新"
 		}
 
-		await git.commit("Update CHANGELOG.md");
 		await git.push("origin", currentBranch);
 
 		// await npmPublish({
