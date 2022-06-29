@@ -20626,6 +20626,9 @@ const currentBranch = process.env.GITHUB_REF_NAME;
 		const version = packageJson["version"];
 		const git = simpleGit();
 
+		console.log("=== inputs ===");
+		console.log(inputs);
+
 		git
 			.addConfig("user.email", inputs.gitName)
 			.addConfig("user.name", inputs.gitEmail);
